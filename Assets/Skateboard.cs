@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Skateboard : MonoBehaviour
 {
+    // TODO: fix jumping bug
     public Vector3 spawnPoint;
     private Rigidbody _rigidbody;
     private bool _grounded = true;
@@ -34,7 +33,11 @@ public class Skateboard : MonoBehaviour
             case "Friendly":
                 print("Collided with friendly object");
                 break;
+            case "Finish":
+                SceneManager.LoadScene(1);
+                break;
             default:
+                SceneManager.LoadScene(0);
                 transform.SetPositionAndRotation(spawnPoint, Quaternion.identity);
                 _rigidbody.velocity = Vector3.zero;
                 break;
