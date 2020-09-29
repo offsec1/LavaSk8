@@ -289,7 +289,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7436142347483829951, guid: 9b1c06d9517e0b6d98ae2c257b3bd4e5, type: 3}
       propertyPath: m_Name
-      value: FinishPad Variant
+      value: FinishPad
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9b1c06d9517e0b6d98ae2c257b3bd4e5, type: 3}
