@@ -10,6 +10,7 @@ public class Skateboard : MonoBehaviour
     private Rigidbody _rigidbody;
     private AudioSource _audioSource;
     private bool _grounded = false;
+    private bool _finishedLevel = false;
 
     //Serialized Fields - will be set in Unity editor
     [SerializeField] private float movementSpeed = 100f;
@@ -27,6 +28,8 @@ public class Skateboard : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (_finishedLevel) return;
+        
         Move();
         Rotate();
         Jump();
@@ -40,6 +43,7 @@ public class Skateboard : MonoBehaviour
                 //Just keep going
                 break;
             case "Finish":
+                _finishedLevel = true;
                 _audioSource.Stop();
                 _audioSource.PlayOneShot(firstTryAudio);
                 Invoke(nameof(LoadNextLevel), firstTryAudio.length);
@@ -112,5 +116,6 @@ public class Skateboard : MonoBehaviour
     private void LoadNextLevel()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        _finishedLevel = false;
     }
 }
