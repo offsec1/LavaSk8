@@ -61,7 +61,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 3be52adb5bc3b69e198af0f0ab29315e, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -162,6 +162,8 @@ MonoBehaviour:
   spawnPoint: {x: 0, y: 2, z: 0}
   movementSpeed: 75
   jumpForce: 250
+  ollieAudio: {fileID: 8300000, guid: 3be52adb5bc3b69e198af0f0ab29315e, type: 3}
+  firstTryAudio: {fileID: 8300000, guid: 6c07bd7b20691f2b790baee7636174d2, type: 3}
 --- !u!1 &7910223593115934596
 GameObject:
   m_ObjectHideFlags: 0

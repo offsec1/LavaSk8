@@ -1,22 +1,27 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class Skateboard : MonoBehaviour
 {
-    // TODO: fix jumping bug
-    
+    //There is the skateboard at the beginning and on respawn 
     public Vector3 spawnPoint;
+
     private Rigidbody _rigidbody;
-    private bool _grounded = true;
-    private AudioSource _jumpAudio;
+    private AudioSource _audioSource;
+    private bool _grounded = false;
+
+    //Serialized Fields - will be set in Unity editor
     [SerializeField] private float movementSpeed = 100f;
     [SerializeField] private float jumpForce = 100f;
+    [SerializeField] private AudioClip ollieAudio;
+    [SerializeField] private AudioClip firstTryAudio;
 
     // Start is called before the first frame update
     void Start()
     {
         _rigidbody = GetComponent<Rigidbody>();
-        _jumpAudio = GetComponent<AudioSource>();
+        _audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -32,10 +37,12 @@ public class Skateboard : MonoBehaviour
         switch (collision.gameObject.tag)
         {
             case "Friendly":
-                print("Collided with friendly object");
+                //Just keep going
                 break;
             case "Finish":
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+                _audioSource.Stop();
+                _audioSource.PlayOneShot(firstTryAudio);
+                Invoke(nameof(LoadNextLevel), firstTryAudio.length);
                 break;
             default:
                 SceneManager.LoadScene(1);
@@ -55,14 +62,14 @@ public class Skateboard : MonoBehaviour
     private void Jump()
     {
         float jumpThisFrame = jumpForce * Time.deltaTime;
-        
-        //Jumping movement
+
+        //Jumping movement and sound
         if (Input.GetKey(KeyCode.Space) && _grounded)
         {
             _rigidbody.AddRelativeForce(Vector3.up * jumpThisFrame);
-            if (!_jumpAudio.isPlaying)
+            if (!_audioSource.isPlaying)
             {
-                _jumpAudio.Play();
+                _audioSource.PlayOneShot(ollieAudio);
             }
         }
     }
@@ -70,7 +77,7 @@ public class Skateboard : MonoBehaviour
     private void Move()
     {
         float moveThisFrame = movementSpeed * Time.deltaTime;
-        
+
         //Forward and backwards movement
         if (Input.GetKey(KeyCode.W))
         {
@@ -87,7 +94,8 @@ public class Skateboard : MonoBehaviour
         float rotateThisFrame = movementSpeed * Time.deltaTime;
 
         _rigidbody.freezeRotation = true;
-        transform.SetPositionAndRotation(transform.position, new Quaternion(transform.rotation.x, transform.rotation.y, 0f, transform.rotation.w));
+        transform.SetPositionAndRotation(transform.position,
+            new Quaternion(transform.rotation.x, transform.rotation.y, 0f, transform.rotation.w));
         //Left and right movement
         if (Input.GetKey(KeyCode.A))
         {
@@ -99,5 +107,10 @@ public class Skateboard : MonoBehaviour
         }
 
         _rigidbody.freezeRotation = false;
+    }
+
+    private void LoadNextLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 }

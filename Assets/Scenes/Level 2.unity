@@ -993,10 +993,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Skateboard
       objectReference: {fileID: 0}
-    - target: {fileID: 5791303256059148452, guid: 7e9550a1d1a25bdfaab77b623c485571, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 8850101078455637725, guid: 7e9550a1d1a25bdfaab77b623c485571, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
